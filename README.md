@@ -78,10 +78,14 @@ Prioritized Recall, F1-Score, ROC-AUC, and False Negative Rate over Accuracy due
 
 ## Explainable AI Results
 
-![SHAP Summary Plot](images/shap_summary.png)
+<img width="310" height="207" alt="image" src="https://github.com/user-attachments/assets/e967d1f1-22ca-496b-a750-b774791d5573" />
+
+<img width="281" height="207" alt="image" src="https://github.com/user-attachments/assets/b5ce2ba4-82d3-4a95-abe6-b8b53fbadcc2" />
+
+
 SHAP Summary Plot for SVM: Top 3 drivers for malignancy prediction are perimeter_worst, concave points_mean, and concavity_mean. High feature values increase malignancy risk, which aligns with clinical knowledge of tumor morphology.
 
-![Random Forest Feature Importance](images/rf_importance.png)
+
 Random Forest Feature Importance confirms the same top 3 features as SHAP. Cross-method agreement increases clinical trust in the model.
 
 **Impact**:
