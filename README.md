@@ -44,7 +44,7 @@ The goal was to understand data characteristics, identify potential issues such 
 - **Class Imbalance**: Recognized that overall accuracy can be misleading. Consequently, model evaluation prioritized metrics like Recall (Sensitivity), F1-Score, and ROC-AUC, and techniques like class weighting were used during training.
 - **Interpretability**: The analysis was designed with clinical relevance in mind, ensuring that features used in models align with known medical properties of tumor cells.
 
-## 📈 Results & Impact
+## Results & Impact
 This pipeline provided the clean, validated dataset used in the subsequent comparative study of machine learning models. The rigorous preparation contributed to strong performance across all algorithms:
 - **Best Performing Model**: Support Vector Machine (SVM) achieved 97.19% accuracy, 99.58% ROC-AUC, and the lowest False Negative Rate (3.77%) — a critical metric for medical diagnosis.
 - **Other Models**: Artificial Neural Networks (ANN) and Logistic Regression (LR) also performed excellently, offering different trade-offs between accuracy and interpretability.
