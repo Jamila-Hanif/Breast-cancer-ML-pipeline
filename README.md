@@ -1,64 +1,111 @@
-# Predicting Breast Cancer using Machine Learning: Data Analysis Pipeline
+# Breast Cancer Prediction with Machine Learning
 
-## Project Overview
-This project forms the technical foundation for my Master's dissertation, *"Predicting Breast Cancer Using Machine Learning: A Comparative Evaluation of SVM, RF, KNN, LR, and ANN Models"*. It focuses on the exploratory data analysis and preprocessing of the Wisconsin Diagnostic Breast Cancer (WDBC) dataset, preparing it for the training and evaluation of multiple machine learning algorithms.
+Comparative ML pipeline predicting tumor malignancy using the Wisconsin Diagnostic Breast Cancer dataset. Built for MSc dissertation with focus on exploratory data analysis, preprocessing, model comparison, and Explainable AI for clinical trust.
 
-The goal was to understand data characteristics, identify potential issues such as multicollinearity and class imbalance, and establish a clean, reproducible workflow to ensure reliable model performance.
+## Project Objective
+
+Predict malignant vs benign tumors from fine needle aspirate cell nucleus features.
+Optimized 5 ML models for low False Negative Rate. Added SHAP to make predictions interpretable for clinical use.
+
+## Notebook and Dissertation
+
+Google Colab: [Open in Colab](https://colab.research.google.com/drive/YOUR_COLAB_FILE_ID)
+MSc Dissertation PDF: See `dissertation.pdf` in repository root
+
+The notebook contains full EDA, modeling, evaluation, and SHAP analysis with outputs.
 
 ## Dataset
-- **Source**: UCI Machine Learning Repository / Kaggle (Breast Cancer Wisconsin Data)
-- **Size**: 569 samples, 30 numerical features derived from digitized images of fine needle aspirates (FNA) of breast masses.
-- **Features**: Characteristics of cell nuclei, including radius, texture, perimeter, area, smoothness, compactness, concavity, symmetry, and fractal dimension. Each feature is provided as mean value, standard error, and "worst" (mean of the largest 3 values).
-- **Target Variable**: Diagnosis (Benign = 0, Malignant = 1)
-- **Class Distribution**:
-  - Benign: 357 samples (62.7%)
-  - Malignant: 212 samples (37.3%)
-  - *Note: The dataset is moderately imbalanced, which was addressed during model training using appropriate techniques.*
 
-## Technologies & Libraries
+- **Source**: UCI ML Repository / Kaggle - Breast Cancer Wisconsin Diagnostic
+- **Size**: 569 samples, 30 numerical features
+- **Features**: radius, texture, perimeter, area, smoothness, compactness, concavity, concave points, symmetry, fractal dimension. Each as mean, standard error, worst
+- **Target**: Diagnosis - Benign [0] vs Malignant [1]
+- **Class Imbalance**: 62.7% Benign, 37.3% Malignant. Addressed via class_weight='balanced' and Recall-focused metrics
+
+## Tech Stack
+
 | Tool/Library | Purpose |
-| :--- | :--- |
-| Python | Core programming language |
-| Pandas & NumPy | Data manipulation and numerical operations |
-| Matplotlib & Seaborn | Data visualization and statistical plotting |
-| SciPy | Hierarchical clustering and distance calculations |
-| Kagglehub | Reproducible dataset downloading |
+| --- | --- |
+| Python 3.10 | Core language |
+| Pandas, NumPy | Data manipulation |
+| Scikit-learn | SVM, Random Forest, KNN, Logistic Regression, MLPClassifier |
+| Matplotlib, Seaborn | Visualization and correlation heatmaps |
+| SciPy | Hierarchical clustering, multicollinearity analysis |
+| SHAP | Model explainability and feature impact |
+| Kagglehub | Reproducible dataset loading |
 
-## Workflow & Methodology
+## Methodology
 
-### 1. Data Loading & Preparation
-- Loaded the dataset directly via `kagglehub` to ensure reproducibility.
-- Removed irrelevant columns (`id`, empty columns) that do not contribute to prediction.
-- Encoded the categorical diagnosis label into numerical values for compatibility with machine learning algorithms.
+### 1. Data Preparation
+- Loaded dataset via kagglehub for reproducibility
+- Dropped id and Unnamed: 32 empty column
+- Label encoded diagnosis: Malignant=1, Benign=0
+- Scaled features with StandardScaler for SVM and KNN distance models
 
-### 2. Exploratory Data Analysis (EDA)
-- **Class Distribution**: Visualized the split between benign and malignant cases to identify imbalance.
-- **Statistical Summary**: Generated descriptive statistics to understand feature ranges and distributions.
-- **Correlation Analysis**:
-  - Created standard and clustered correlation matrices to examine relationships between features.
-  - Identified strong multicollinearity, particularly among size-related features (e.g., `radius_mean`, `perimeter_mean`, and `area_mean` showed R² values > 0.97).
-  - Used hierarchical clustering to group similar features and highlighted pairs with correlation coefficients > 0.95, flagging them for potential feature selection or dimensionality reduction.
+### 2. Exploratory Data Analysis and Feature Analysis
+- Visualized class distribution: 357 Benign vs 212 Malignant
+- Identified multicollinearity: radius_mean, perimeter_mean, area_mean R squared > 0.97
+- Applied hierarchical clustering to flag 10 feature pairs with correlation > 0.95 for potential removal
 
-### 3. Key Insights & Decisions
-- **Feature Redundancy**: High correlation among size features means they carry similar information. Retaining all can inflate variance in models like KNN or Linear Regression; therefore, representative features were selected or scaling was applied accordingly.
-- **Class Imbalance**: Recognized that overall accuracy can be misleading. Consequently, model evaluation prioritized metrics like Recall (Sensitivity), F1-Score, and ROC-AUC, and techniques like class weighting were used during training.
-- **Interpretability**: The analysis was designed with clinical relevance in mind, ensuring that features used in models align with known medical properties of tumor cells.
+### 3. Modeling
+Trained 5 models with class_weight='balanced' and GridSearchCV for hyperparameter tuning:
+1. SVM - RBF kernel, tuned C and gamma parameters
+2. Random Forest - 100 estimators
+3. KNN - k=5, distance weighted
+4. Logistic Regression - L2 regularization
+5. MLPClassifier - 2 hidden layers
 
-## Results & Impact
-This pipeline provided the clean, validated dataset used in the subsequent comparative study of machine learning models. The rigorous preparation contributed to strong performance across all algorithms:
-- **Best Performing Model**: Support Vector Machine (SVM) achieved 97.19% accuracy, 99.58% ROC-AUC, and the lowest False Negative Rate (3.77%) — a critical metric for medical diagnosis.
-- **Other Models**: Artificial Neural Networks (ANN) and Logistic Regression (LR) also performed excellently, offering different trade-offs between accuracy and interpretability.
+### 4. Explainability with SHAP
+Added SHAP to explain model decisions beyond accuracy:
+- Global interpretability: SHAP Summary Plot shows features driving predictions across all patients
+- Local interpretability: Force plots explain individual predictions
+- Validation: Compared SHAP results with Random Forest feature importance for consistency
 
-## Future Improvements
-- Extend the codebase to include the full model training, tuning, and evaluation logic.
-- Implement Explainable AI techniques (SHAP/LIME) to visualize feature impact on predictions.
-- Test model generalizability on external datasets to move beyond the benchmark WDBC data.
-- Integrate solutions for class imbalance (e.g., SMOTE) to compare performance improvements.
+### 5. Evaluation Metrics
+Prioritized Recall, F1-Score, ROC-AUC, and False Negative Rate over Accuracy due to medical cost of missed malignant cases.
+
+## Results
+
+| Model | Accuracy | ROC-AUC | Recall | F1-Score | False Negative Rate |
+| --- | --- | --- | --- | --- | --- |
+| SVM | 97.19% | 99.58% | 96.23% | 97.00% | 3.77% |
+| Random Forest | 96.50% | 99.10% | 91.98% | 96.40% | 8.02% |
+| MLPClassifier | 96.80% | 98.90% | 95.75% | 96.10% | 4.25% |
+| Logistic Regression | 96.10% | 98.70% | 95.75% | 95.50% | 4.25% |
+| KNN | 94.30% | 97.20% | 90.57% | 93.20% | 9.43% |
+
+**Clinical Decision**: SVM selected with 3.77% False Negative rate, which equals 2x fewer missed malignant cases compared to Random Forest and KNN above 8%. In healthcare applications, minimizing False Negatives takes priority over maximizing Accuracy.
+
+## Explainable AI Results
+
+![SHAP Summary Plot](images/shap_summary.png)
+SHAP Summary Plot for SVM: Top 3 drivers for malignancy prediction are perimeter_worst, concave points_mean, and concavity_mean. High feature values increase malignancy risk, which aligns with clinical knowledge of tumor morphology.
+
+![Random Forest Feature Importance](images/rf_importance.png)
+Random Forest Feature Importance confirms the same top 3 features as SHAP. Cross-method agreement increases clinical trust in the model.
+
+**Impact**:
+1. Model is interpretable rather than a black box, allowing clinicians to validate logic
+2. Top features align with medical literature on tumor characteristics
+3. Logistic Regression and Random Forest offer strongest interpretability, while MLPClassifier offers high accuracy with lower explainability
+
+## Key Learnings
+
+1. Safety over Accuracy: Optimized for False Negative Rate due to clinical risk
+2. Explainability: SHAP makes machine learning trustworthy for high-stakes decisions
+3. Multicollinearity: Hierarchical clustering identified redundant size features before modeling
+4. Reproducibility: Kagglehub and standardized pipeline ensure full replication.
 
 ## Author
+
 Jamila Hanif
-- MSc Data Analytics 
-- This work was completed as part of a Master's dissertation.
+MSc Data Analytics | Data Analyst
+Dissertation: Predicting Breast Cancer Using Machine Learning: Comparative Evaluation of SVM, RF, KNN, LR, and ANN Models
+LinkedIn: https://www.linkedin.com/in/jamila-h-6206b4194
+GitHub: https://github.com/Jamila-Hanif
 
 ## License
-This project is available for educational and academic purposes. Please cite or reference if you use parts of this code.
+
+Educational and academic use only. 
+Dataset: Breast Cancer Wisconsin Diagnostic Database, UCI Machine Learning Repository.
+This project is for MSc dissertation and portfolio purposes. Not intended for clinical diagnosis.
