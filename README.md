@@ -1,11 +1,11 @@
 # Predicting Breast Cancer using Machine Learning: Data Analysis Pipeline
 
-## 📋 Project Overview
+## Project Overview
 This project forms the technical foundation for my Master's dissertation, *"Predicting Breast Cancer Using Machine Learning: A Comparative Evaluation of SVM, RF, KNN, LR, and ANN Models"*. It focuses on the exploratory data analysis and preprocessing of the Wisconsin Diagnostic Breast Cancer (WDBC) dataset, preparing it for the training and evaluation of multiple machine learning algorithms.
 
 The goal was to understand data characteristics, identify potential issues such as multicollinearity and class imbalance, and establish a clean, reproducible workflow to ensure reliable model performance.
 
-## 📊 Dataset
+## Dataset
 - **Source**: UCI Machine Learning Repository / Kaggle (Breast Cancer Wisconsin Data)
 - **Size**: 569 samples, 30 numerical features derived from digitized images of fine needle aspirates (FNA) of breast masses.
 - **Features**: Characteristics of cell nuclei, including radius, texture, perimeter, area, smoothness, compactness, concavity, symmetry, and fractal dimension. Each feature is provided as mean value, standard error, and "worst" (mean of the largest 3 values).
@@ -15,7 +15,7 @@ The goal was to understand data characteristics, identify potential issues such 
   - Malignant: 212 samples (37.3%)
   - *Note: The dataset is moderately imbalanced, which was addressed during model training using appropriate techniques.*
 
-## 🛠️ Technologies & Libraries
+## Technologies & Libraries
 | Tool/Library | Purpose |
 | :--- | :--- |
 | Python | Core programming language |
@@ -24,7 +24,7 @@ The goal was to understand data characteristics, identify potential issues such 
 | SciPy | Hierarchical clustering and distance calculations |
 | Kagglehub | Reproducible dataset downloading |
 
-## 🔄 Workflow & Methodology
+## Workflow & Methodology
 
 ### 1. Data Loading & Preparation
 - Loaded the dataset directly via `kagglehub` to ensure reproducibility.
@@ -49,16 +49,16 @@ This pipeline provided the clean, validated dataset used in the subsequent compa
 - **Best Performing Model**: Support Vector Machine (SVM) achieved 97.19% accuracy, 99.58% ROC-AUC, and the lowest False Negative Rate (3.77%) — a critical metric for medical diagnosis.
 - **Other Models**: Artificial Neural Networks (ANN) and Logistic Regression (LR) also performed excellently, offering different trade-offs between accuracy and interpretability.
 
-## 🚀 Future Improvements
+## Future Improvements
 - Extend the codebase to include the full model training, tuning, and evaluation logic.
 - Implement Explainable AI techniques (SHAP/LIME) to visualize feature impact on predictions.
 - Test model generalizability on external datasets to move beyond the benchmark WDBC data.
 - Integrate solutions for class imbalance (e.g., SMOTE) to compare performance improvements.
 
-## 📝 Author
+## Author
 Jamila Hanif
 - MSc Data Analytics 
 - This work was completed as part of a Master's dissertation.
 
-## 📄 License
+## License
 This project is available for educational and academic purposes. Please cite or reference if you use parts of this code.
