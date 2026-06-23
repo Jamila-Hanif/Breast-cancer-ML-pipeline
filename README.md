@@ -9,7 +9,7 @@ Optimized 5 ML models for low False Negative Rate. Added SHAP to make prediction
 
 ## Notebook and Dissertation
 
-Google Colab: [Open in Colab](https://colab.research.google.com/drive/YOUR_COLAB_FILE_ID)
+Google Colab: https://colab.research.google.com/drive/16lep2x0Uh29Hop47VSn2MAUs8-UQ4wXM
 MSc Dissertation PDF: See `dissertation.pdf` in repository root
 
 The notebook contains full EDA, modeling, evaluation, and SHAP analysis with outputs.
