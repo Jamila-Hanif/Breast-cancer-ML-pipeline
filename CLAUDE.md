@@ -9,5 +9,5 @@ This machine learning pipeline uses the public Wisconsin diagnostic breast cance
 
 ## 3 rounds Evaluation tasks
 Round 1: Add validation checks to find missing feature values in the data processing workflow.
-Round 2: Optimise the multi model comparison logic into a reusable independent function. 
+Round 2: Optimise the multi model comparison code into a reusable independent function. 
 Round 3: Extend the SHAP explainability to generate human readable plain text in a clinical style summary. 
